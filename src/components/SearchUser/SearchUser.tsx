@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import SearchForm from '../SearchForm/SearchForm'
 import UserDetails from '../UserDetails/UserDetails'
 import UserLoading from '../UserLoading/UserLoading'
+import { fetchUserData } from '../../apis/githubAPI'
 
 interface User {
 	avatar_url: string
@@ -27,22 +27,14 @@ const SearchUser: React.FC = () => {
 	const handleSearch = async (username: string) => {
 		setLoading(true)
 		try {
-			const response = await axios.get(`https://api.github.com/users/${username}`)
-			setUserData(response.data)
+			const data = await fetchUserData(username)
+			setUserData(data)
 			setError('')
-		} catch (error) {
-			if (axios.isAxiosError(error)) {
-				if (error.response?.status === 404) {
-					setError('User not found. Try again ...')
-				} else {
-					setError('Oops! Something went wrong. Please try again later.')
-				}
-				setUserData(null)
-			}
+		} catch (error: any) {
+			setError(error.message)
+			setUserData(null)
 		} finally {
-			setTimeout(() => {
-				setLoading(false)
-			}, 1000)
+			setLoading(false)
 		}
 	}
 
