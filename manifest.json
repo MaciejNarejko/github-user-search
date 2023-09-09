@@ -1,0 +1,14 @@
+{
+	"short_name": "github-user-search",
+	"name": "Github User Search App",
+	"icons": [
+		{
+			"src": "favicon-32x32.png",
+			"sizes": "32x32",
+			"type": "image/x-icon"
+		}
+	],
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#FEFEFE"
+}
